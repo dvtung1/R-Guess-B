@@ -87,7 +87,6 @@ export function executeGame() {
       blocks[i].style.background = randomRGB;
       blocks[i].addEventListener("click", guessWrong);
     }
-    console.log("hi");
   }
   assignRGB();
 

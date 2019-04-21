@@ -1,3 +1,37 @@
-<p>
-  signup works!
-</p>
+<form (submit)="onSubmit(signupForm)" #signupForm="ngForm">
+  <div>
+    <label for="emailId">Enter your Purdue email</label>
+    <input
+      type="email"
+      placeholder="Email"
+      id="emailId"
+      name="email"
+      required
+      ngModel
+    />
+  </div>
+  <div>
+    <label for="passId">Enter your password</label>
+    <input
+      type="password"
+      placeholder="Password"
+      id="passId"
+      name="password"
+      required
+      ngModel
+    />
+  </div>
+  <div>
+    <label for="passId2">Re-enter password</label>
+    <input
+      type="password"
+      placeholder="Password"
+      id="passId2"
+      name="password2"
+      required
+      ngModel
+    />
+  </div>
+  <button type="submit">Sign up!</button>
+</form>
+<p>{{ errorMessage }}</p>

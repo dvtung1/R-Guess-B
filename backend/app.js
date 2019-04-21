@@ -1,23 +1,12 @@
-const mongoose = require("mongoose");
+const Backendless = require("backendless");
 const express = require("express");
 const bodyParser = require("body-parser");
+const UserRoutes = require("./routes/UserRoutes");
 
 require("dotenv").config();
 const app = express();
 
-mongoose
-  .connect(
-    `mongodb+srv://dvtung1:${
-      process.env.DB_ID
-    }@cluster0-hrsq8.mongodb.net/test?retryWrites=true`,
-    { useNewUrlParser: true }
-  )
-  .then(() => {
-    console.log("Connected to database");
-  })
-  .catch(() => {
-    console.log("Connect database failed");
-  });
+Backendless.initApp(process.env.APP_ID, process.env.API_KEY);
 
 //use body parser
 app.use(bodyParser.json());
@@ -36,5 +25,7 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use("/api/user", UserRoutes);
 
 module.exports = app;
