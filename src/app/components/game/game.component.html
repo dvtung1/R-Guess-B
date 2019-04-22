@@ -1,6 +1,6 @@
 <header>
   <div id="head" class="text-center p-5">
-    <h1>Guessing game</h1>
+    <h1>What color is this?</h1>
     <p id="rgbBoard"></p>
   </div>
   <div
@@ -13,12 +13,13 @@
       type="button"
       class="btn btn-link"
     >
-      PLAY AGAIN?
+      Next Level
     </button>
     <p id="gameStatus"></p>
     <div>
-      <button type="button" class="btn btn-link">EASY</button>
-      <button type="button" class="btn btn-link">HARD</button>
+      <button type="button" (click)="onClick()" class="btn btn-link">
+        Save highscore
+      </button>
     </div>
   </div>
 </header>
@@ -49,3 +50,6 @@
     </div>
   </div>
 </section>
+
+<p>Highscore: <span id="highscore">0</span></p>
+<p>Chances: <span id="chance">3</span></p>

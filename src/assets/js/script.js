@@ -1,4 +1,19 @@
+let highscore = 0;
 export function executeGame() {
+  let chanceLeft = 3;
+  let choosenRGB;
+  const numBlocks = 6;
+  let canReset = true;
+
+  //DOM declaration
+  var rgbBoard = document.querySelector("#rgbBoard");
+  var blocks = document.querySelectorAll(".block");
+  var head = document.querySelector("#head");
+  var gameStatus = document.querySelector("#control p");
+  var resetButton = document.querySelector("#resetButton");
+  var highscoreStatus = document.querySelector("#highscore");
+  var chanceStatus = document.querySelector("#chance");
+
   function generateColor() {
     var redColor = Math.floor(Math.random() * 256);
     var greenColor = Math.floor(Math.random() * 256);
@@ -27,6 +42,7 @@ export function executeGame() {
   function guessCorrect() {
     head.style.background = choosenRGB;
     gameStatus.textContent = "Congratulation!";
+    canReset = true;
 
     //make all the blocks unclickable
     this.removeEventListener("click", guessCorrect);
@@ -35,15 +51,39 @@ export function executeGame() {
       block.style.background = choosenRGB;
       block.removeEventListener("click", guessWrong);
     });
+    highscore++;
+    setHighscore();
+  }
+  function setHighscore() {
+    highscoreStatus.textContent = highscore;
+  }
+  function setChance() {
+    chanceStatus.textContent = chanceLeft;
   }
 
   function guessWrong() {
     this.style.background = "white";
     gameStatus.textContent = "Try Again!";
+    chanceLeft--;
+    setChance();
+    if (chanceLeft <= 0) {
+      chanceLeft = 3;
+      highscore = 0;
+      setHighscore();
+      setChance();
+      alert("You lose");
+      canReset = true;
+      resetGame();
+    }
     //this.classList.add = "d-none";
   }
 
   function resetGame() {
+    if (canReset == false) {
+      alert("Please finish this level first");
+      return;
+    }
+    canReset = false;
     blocks.forEach(function(block) {
       block.removeEventListener("click", guessCorrect);
       block.removeEventListener("click", guessWrong);
@@ -53,30 +93,16 @@ export function executeGame() {
     head.style.background = "blue";
 
     //generate new correct block order
-    blockCorrectOrder = generateOrder(numBlocks);
+    let blockCorrectOrder = generateOrder(numBlocks);
     //generate new correct block color using old var
     choosenRGB = getRGBColor();
     //set new context
     rgbBoard.textContent = choosenRGB;
 
-    assignRGB();
+    assignRGB(blockCorrectOrder);
   }
 
-  var rgbBoard = document.querySelector("#rgbBoard");
-  var blocks = document.querySelectorAll(".block");
-  var head = document.querySelector("#head");
-  var gameStatus = document.querySelector("#control p");
-  var resetButton = document.querySelector("#resetButton");
-
-  //global correct RGB code
-  var choosenRGB = getRGBColor();
-  rgbBoard.textContent = choosenRGB;
-
-  var numBlocks = 6;
-  //global correct block order
-  var blockCorrectOrder = generateOrder(numBlocks);
-
-  function assignRGB() {
+  function assignRGB(blockCorrectOrder) {
     for (var i = 0; i < numBlocks; i++) {
       var randomRGB = getRGBColor();
       if (i == blockCorrectOrder) {
@@ -88,7 +114,11 @@ export function executeGame() {
       blocks[i].addEventListener("click", guessWrong);
     }
   }
-  assignRGB();
+
+  resetGame();
 
   resetButton.addEventListener("click", resetGame);
+}
+export function getHighscore() {
+  return Number(highscore);
 }
