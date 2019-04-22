@@ -9,7 +9,7 @@ import { Subscription } from "rxjs";
   styleUrls: ["./signup.component.css"]
 })
 export class SignupComponent implements OnInit, OnDestroy {
-  public errorMessage: string;
+  errorMessage: string;
   private authMessageListener: Subscription;
   constructor(private authService: AuthService) {}
 
@@ -30,13 +30,11 @@ export class SignupComponent implements OnInit, OnDestroy {
     //check if email is purdue email
     if (!email.includes("@purdue.edu")) {
       this.errorMessage = "Please use purdue email";
-      // form.reset();
       return;
     }
     //check if password enter correctly
     if (!(password === rePassword)) {
       this.errorMessage = "Please reenter password";
-      //      form.reset();
       return;
     }
     //sign up

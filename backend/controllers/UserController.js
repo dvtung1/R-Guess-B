@@ -1,4 +1,5 @@
 const Backendless = require("backendless");
+const jwt = require("jsonwebtoken");
 
 exports.signUp = async (req, res) => {
   try {

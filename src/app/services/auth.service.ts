@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Subject } from "rxjs";
+import { Router } from "@angular/router";
 
 const BACKEND_URL = environment.apiUrl + "/user";
 
@@ -15,7 +16,7 @@ export class AuthService {
   private authEmitter = new Subject<boolean>();
   private authMessageEmitter = new Subject<string>();
   private timerInterval: any;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
   signup(email: string, password: string) {
     this.http
       .post<{ message: string }>(BACKEND_URL + "/signup", {
@@ -23,7 +24,9 @@ export class AuthService {
         password
       })
       .subscribe(
-        () => {},
+        () => {
+          this.router.navigate(["/"]);
+        },
         err => {
           this.authMessageEmitter.next(err.error.message);
         }
@@ -52,6 +55,7 @@ export class AuthService {
             this.token
           );
         }
+        this.router.navigate(["/"]);
       },
       err => {
         this.authMessageEmitter.next(err.error.message);
@@ -84,6 +88,7 @@ export class AuthService {
     this.authEmitter.next(false);
     this.clearAuthInfo();
     clearInterval(this.timerInterval);
+    //this.router.navigate(["/"]);
   }
 
   private setAuthTimer(duration: number) {

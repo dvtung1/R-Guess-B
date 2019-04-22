@@ -1,27 +1,33 @@
-<form (submit)="onSubmit(loginForm)" #loginForm="ngForm">
-  <div>
-    <label for="emailId">Enter your Purdue email</label>
-    <input
-      type="email"
-      placeholder="Email"
-      id="emailId"
-      name="email"
-      required
-      ngModel
-    />
-  </div>
-  <div>
-    <label for="passId">Enter your password</label>
-    <input
-      type="password"
-      placeholder="Password"
-      id="passId"
-      name="password"
-      required
-      ngModel
-    />
-  </div>
+<div class="container">
+  <form (submit)="onSubmit(loginForm)" #loginForm="ngForm">
+    <div class="form-group">
+      <label for="emailId">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="emailId"
+        aria-describedby="emailHelp"
+        placeholder="Enter email"
+        name="email"
+        ngModel
+      />
+      <small id="emailHelp" class="form-text text-muted"
+        >We'll never share your email with anyone else.</small
+      >
+    </div>
+    <div class="form-group">
+      <label for="passwordId">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="passwordId"
+        placeholder="Password"
+        name="password"
+        ngModel
+      />
+    </div>
 
-  <button type="submit">Log in!</button>
-</form>
-<p>{{ errorMessage }}</p>
+    <button type="submit" class="btn btn-primary">Log in!</button>
+  </form>
+  <p>{{ errorMessage }}</p>
+</div>

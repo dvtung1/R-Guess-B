@@ -10,7 +10,7 @@ import { Subscription } from "rxjs";
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private authMessageListener: Subscription;
-  private errorMessage: string;
+  errorMessage: string;
   constructor(private authService: AuthService) {}
   ngOnDestroy(): void {
     this.authMessageListener.unsubscribe();
