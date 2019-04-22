@@ -33,12 +33,6 @@ body {
   height: 100%;
 } */
 
-body,
-html {
-  background-color: black;
-  height: 100%;
-}
-
 #control {
   background-color: white;
   height: 2.5rem;

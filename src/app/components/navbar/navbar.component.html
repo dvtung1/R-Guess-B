@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/">R-Guess-B</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div
+    *ngIf="!isAuthenticated"
+    class="collapse navbar-collapse"
+    id="navbarNavAltMarkup"
+  >
+    <div class="navbar-nav ml-auto">
+      <a class="nav-item nav-link" routerLink="/login">Log In</a>
+    </div>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" routerLink="/signup">Sign Up</a>
+    </div>
+  </div>
+  <div
+    *ngIf="isAuthenticated"
+    class="collapse navbar-collapse"
+    id="navbarNavAltMarkup"
+  >
+    <div class="navbar-nav ml-auto">
+      <a class="nav-item nav-link" routerLink="/manage">Manage</a>
+    </div>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" (click)="logout()">Log Out</a>
+    </div>
+  </div>
+</nav>

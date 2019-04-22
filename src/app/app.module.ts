@@ -11,6 +11,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { GameComponent } from "./components/game/game.component";
 
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    GameComponent
+    GameComponent,
+    NavbarComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
