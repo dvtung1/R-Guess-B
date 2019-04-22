@@ -7,7 +7,12 @@
     id="control"
     class="d-flex justify-content-around align-items-center text-center"
   >
-    <button id="resetButton" type="button" class="btn btn-link">
+    <button
+      (click)="onClick()"
+      id="resetButton"
+      type="button"
+      class="btn btn-link"
+    >
       PLAY AGAIN?
     </button>
     <p id="gameStatus"></p>
