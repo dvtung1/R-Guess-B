@@ -92,8 +92,10 @@ export class AuthService {
   }
 
   private setAuthTimer(duration: number) {
+    //auto log out for a duration
     this.timerInterval = setInterval(() => {
       this.logout();
+      alert("You have been logged out");
     }, duration * 1000);
   }
 

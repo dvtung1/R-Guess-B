@@ -26,7 +26,7 @@ exports.logIn = async (req, res) => {
       false
     );
     const token = jwt.sign(
-      { email, id: currentUser.objectId },
+      { email, userId: currentUser.objectId },
       process.env.JWT_KEY,
       {
         expiresIn: "1h"

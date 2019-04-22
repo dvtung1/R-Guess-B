@@ -38,7 +38,7 @@ export function executeGame() {
   }
 
   function guessWrong() {
-    this.style.background = "black";
+    this.style.background = "white";
     gameStatus.textContent = "Try Again!";
     //this.classList.add = "d-none";
   }

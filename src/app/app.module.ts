@@ -7,18 +7,16 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./components/auth/login/login.component";
 import { SignupComponent } from "./components/auth/signup/signup.component";
-import { HomeComponent } from "./components/home/home.component";
 import { GameComponent } from "./components/game/game.component";
 
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { NavbarComponent } from "./components/navbar/navbar.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    HomeComponent,
     GameComponent,
     NavbarComponent
   ],
