@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { executeGame, getHighscore } from "../../../assets/js/script";
+import { GameService } from "src/app/services/game.service";
 
 @Component({
   selector: "app-game",
@@ -7,13 +8,21 @@ import { executeGame, getHighscore } from "../../../assets/js/script";
   styleUrls: ["./game.component.css"]
 })
 export class GameComponent implements OnInit {
-  constructor() {}
+  response: any;
+  constructor(private gameService: GameService) {}
 
   ngOnInit() {
     executeGame();
   }
   onClick() {
-    var highscore = getHighscore();
-    console.log(highscore);
+    let highscore = getHighscore();
+    this.gameService.saveHighscore(highscore).subscribe(
+      response => {
+        console.log(response.message);
+      },
+      err => {
+        console.log(err.error.message);
+      }
+    );
   }
 }

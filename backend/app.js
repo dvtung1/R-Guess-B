@@ -2,6 +2,7 @@ const Backendless = require("backendless");
 const express = require("express");
 const bodyParser = require("body-parser");
 const UserRoutes = require("./routes/UserRoutes");
+const GameRoutes = require("./routes/GameRoutes");
 
 require("dotenv").config();
 const app = express();
@@ -27,5 +28,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/user", UserRoutes);
+app.use("/api/game", GameRoutes);
 
 module.exports = app;

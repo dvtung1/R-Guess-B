@@ -29,7 +29,12 @@
     id="navbarNavAltMarkup"
   >
     <div class="navbar-nav ml-auto">
-      <a class="nav-item nav-link" routerLink="/manage">Manage</a>
+      <a
+        class="nav-item nav-link"
+        [ngClass]="isManage ? 'active' : ''"
+        routerLink="/manage"
+        >Manage</a
+      >
     </div>
     <div class="navbar-nav">
       <a class="nav-item nav-link" (click)="logout()">Log Out</a>
