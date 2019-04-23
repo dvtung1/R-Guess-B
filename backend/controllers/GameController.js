@@ -5,8 +5,7 @@ exports.saveHighscore = async (req, res) => {
   try {
     const userId = req.userInfo.userId;
     const score = req.body.score;
-    console.log(typeof score);
-    console.log(score);
+
     let highScore = new Highscore({
       score,
       ownerId: userId
@@ -29,6 +28,8 @@ exports.getHighscore = async (req, res) => {
     const queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause(
       whereClause
     );
+    //sort by created time
+    queryBuilder.setSortBy(["created DESC"]);
     //get list of current user's high score
     let highscoreArray = await Backendless.Data.of(Highscore).find(
       queryBuilder
@@ -43,6 +44,38 @@ exports.getHighscore = async (req, res) => {
     return res.status(200).json({
       message: "Fetch current user's highscore successfully",
       highscoreArray
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message
+    });
+  }
+};
+
+exports.getSummary = async (req, res) => {
+  try {
+    //const userId = req.userInfo.userId;
+    const userId = "489F0418-5206-9C4C-FF2E-71D1285BA600";
+    let queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause(
+      `ownerId='${userId}'`
+    );
+    queryBuilder.setProperties([
+      "Count(objectId) as count",
+      "Avg(score) as average",
+      "Min(score) as min",
+      "Max(score) as max"
+    ]);
+    const result = await Backendless.Data.of(Highscore).find(queryBuilder);
+    console.log(result);
+
+    return res.status(200).json({
+      message: "Fetch summary successfully",
+      summary: {
+        count: result[0].count,
+        average: result[0].average,
+        min: result[0].min,
+        max: result[0].max
+      }
     });
   } catch (err) {
     return res.status(500).json({

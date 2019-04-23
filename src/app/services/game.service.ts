@@ -18,4 +18,7 @@ export class GameService {
   getHighscore() {
     return this.http.get<any>(BACKEND_URL + "/score");
   }
+  getSummary() {
+    return this.http.get<any>(BACKEND_URL + "/summary");
+  }
 }

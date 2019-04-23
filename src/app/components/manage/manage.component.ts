@@ -26,8 +26,8 @@ export class ManageComponent implements OnInit {
           };
         })
       )
-      .subscribe(result => {
-        this.highscoreArray = result.highscoreArray;
+      .subscribe(postResponse => {
+        this.highscoreArray = postResponse.highscoreArray;
       });
   }
 }
