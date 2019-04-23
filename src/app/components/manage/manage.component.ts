@@ -9,9 +9,18 @@ import { map } from "rxjs/operators";
 })
 export class ManageComponent implements OnInit {
   highscoreArray: any;
-  constructor(private gameService: GameService) {}
+  summaryInfo: any;
+  order: number;
+  constructor(private gameService: GameService) {
+    this.summaryInfo = {};
+    this.order = 1;
+  }
 
   ngOnInit() {
+    this.gameService.getSummary().subscribe(response => {
+      this.summaryInfo = response.summary;
+    });
+
     this.gameService
       .getHighscore()
       .pipe(
