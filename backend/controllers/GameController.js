@@ -54,8 +54,7 @@ exports.getHighscore = async (req, res) => {
 
 exports.getSummary = async (req, res) => {
   try {
-    //const userId = req.userInfo.userId;
-    const userId = "489F0418-5206-9C4C-FF2E-71D1285BA600";
+    const userId = req.userInfo.userId;
     let queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause(
       `ownerId='${userId}'`
     );

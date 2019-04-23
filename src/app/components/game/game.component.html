@@ -12,7 +12,12 @@
     </button>
     <p id="gameStatus"></p>
     <div>
-      <button type="button" (click)="onClick()" class="btn btn-link">
+      <button
+        [disabled]="!isAuthenticated"
+        type="button"
+        (click)="onClick()"
+        class="btn btn-link"
+      >
         Save highscore
       </button>
     </div>

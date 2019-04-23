@@ -17,9 +17,14 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gameService.getSummary().subscribe(response => {
-      this.summaryInfo = response.summary;
-    });
+    this.gameService.getSummary().subscribe(
+      response => {
+        this.summaryInfo = response.summary;
+      },
+      err => {
+        console.log(err.error.message);
+      }
+    );
 
     this.gameService
       .getHighscore()
@@ -35,8 +40,13 @@ export class ManageComponent implements OnInit {
           };
         })
       )
-      .subscribe(postResponse => {
-        this.highscoreArray = postResponse.highscoreArray;
-      });
+      .subscribe(
+        postResponse => {
+          this.highscoreArray = postResponse.highscoreArray;
+        },
+        err => {
+          console.log(err.error.message);
+        }
+      );
   }
 }
