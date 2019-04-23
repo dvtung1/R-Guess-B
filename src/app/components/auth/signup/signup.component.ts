@@ -27,11 +27,11 @@ export class SignupComponent implements OnInit, OnDestroy {
     const email = form.value.email;
     const password = form.value.password;
     const rePassword = form.value.password2;
-    //check if email is purdue email
-    if (!email.includes("@purdue.edu")) {
-      this.errorMessage = "Please use purdue email";
-      return;
-    }
+    // //check if email is purdue email
+    // if (!email.includes("@purdue.edu")) {
+    //   this.errorMessage = "Please use purdue email";
+    //   return;
+    // }
     //check if password enter correctly
     if (!(password === rePassword)) {
       this.errorMessage = "Please reenter password";
