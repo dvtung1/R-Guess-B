@@ -50,3 +50,9 @@ body {
 #gameStatus {
   width: 30rem;
 }
+
+.card {
+  position: absolute;
+  top: 400px;
+  left: 0;
+}
