@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { executeGame, getHighscore } from "../../../assets/js/script";
 import { GameService } from "src/app/services/game.service";
 import { AuthService } from "src/app/services/auth.service";
@@ -9,7 +9,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./game.component.html",
   styleUrls: ["./game.component.css"]
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
   response: any;
   isAuthenticated: boolean;
   private authListener: Subscription;
@@ -18,6 +18,9 @@ export class GameComponent implements OnInit {
     private authService: AuthService
   ) {}
 
+  ngOnDestroy(): void {
+    this.authListener.unsubscribe();
+  }
   ngOnInit() {
     executeGame();
     this.isAuthenticated = this.authService.getIsAuthenticated();

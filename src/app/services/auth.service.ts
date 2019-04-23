@@ -25,7 +25,7 @@ export class AuthService {
       })
       .subscribe(
         () => {
-          this.router.navigate(["/"]);
+          this.router.navigate(["/login"]);
         },
         err => {
           this.authMessageEmitter.next(err.error.message);
