@@ -43,7 +43,6 @@ export function executeGame() {
     head.style.background = choosenRGB;
     gameStatus.textContent = "Congratulation!";
     canReset = true;
-
     //make all the blocks unclickable
     this.removeEventListener("click", guessCorrect);
     blocks.forEach(function(block) {
@@ -83,6 +82,9 @@ export function executeGame() {
       alert("Please finish this level first");
       return;
     }
+    //renew chances every time it wins
+    chanceLeft = 3;
+    setChance();
     canReset = false;
     blocks.forEach(function(block) {
       block.removeEventListener("click", guessCorrect);
