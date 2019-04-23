@@ -20,6 +20,7 @@ exports.logIn = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
+
     const currentUser = await Backendless.UserService.login(
       email,
       password,
@@ -36,6 +37,19 @@ exports.logIn = async (req, res) => {
       expiresIn: 3600,
       userId: currentUser.objectId,
       token
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message
+    });
+  }
+};
+
+exports.logOut = async (req, res) => {
+  try {
+    await Backendless.UserService.logout();
+    return res.status(200).json({
+      message: "Log out successfully"
     });
   } catch (err) {
     return res.status(500).json({

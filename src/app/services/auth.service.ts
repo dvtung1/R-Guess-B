@@ -88,6 +88,14 @@ export class AuthService {
     this.authEmitter.next(false);
     this.clearAuthInfo();
     clearInterval(this.timerInterval);
+    this.http.get<{ message: string }>(BACKEND_URL + "/logout").subscribe(
+      response => {
+        console.log(response.message);
+      },
+      err => {
+        console.log(err.error.message);
+      }
+    );
     //this.router.navigate(["/"]);
   }
 
