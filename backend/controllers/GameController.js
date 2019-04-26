@@ -65,7 +65,6 @@ exports.getSummary = async (req, res) => {
       "Max(score) as max"
     ]);
     const result = await Backendless.Data.of(Highscore).find(queryBuilder);
-    console.log(result);
 
     return res.status(200).json({
       message: "Fetch summary successfully",
