@@ -3,6 +3,7 @@ import { executeGame, getHighscore } from "../../../assets/js/script";
 import { GameService } from "src/app/services/game.service";
 import { AuthService } from "src/app/services/auth.service";
 import { Subscription } from "rxjs";
+import { Socket } from "ngx-socket-io";
 
 @Component({
   selector: "app-game",
@@ -15,7 +16,8 @@ export class GameComponent implements OnInit, OnDestroy {
   private authListener: Subscription;
   constructor(
     private gameService: GameService,
-    private authService: AuthService
+    private authService: AuthService,
+    private socket: Socket
   ) {}
 
   ngOnDestroy(): void {
@@ -34,6 +36,10 @@ export class GameComponent implements OnInit, OnDestroy {
     let highscore = getHighscore();
     this.gameService.saveHighscore(highscore).subscribe(
       response => {
+        this.socket.emit("score", {
+          score: highscore,
+          user: this.authService.getUserEmail()
+        });
         console.log(response.message);
       },
       err => {

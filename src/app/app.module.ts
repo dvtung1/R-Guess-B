@@ -11,7 +11,11 @@ import { GameComponent } from "./components/game/game.component";
 
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { NavbarComponent } from "./components/navbar/navbar.component";
-import { ManageComponent } from './components/manage/manage.component';
+import { ManageComponent } from "./components/manage/manage.component";
+
+import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
+
+const config: SocketIoConfig = { url: "http://localhost:3000", options: {} };
 
 @NgModule({
   declarations: [
@@ -22,7 +26,13 @@ import { ManageComponent } from './components/manage/manage.component';
     NavbarComponent,
     ManageComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    SocketIoModule.forRoot(config)
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],

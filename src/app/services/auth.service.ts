@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Subject } from "rxjs";
 import { Router } from "@angular/router";
+import { TouchSequence } from "selenium-webdriver";
 
 const BACKEND_URL = environment.apiUrl + "/user";
 
@@ -16,6 +17,7 @@ export class AuthService {
   private authEmitter = new Subject<boolean>();
   private authMessageEmitter = new Subject<string>();
   private timerInterval: any;
+  private userEmail: string;
   constructor(private http: HttpClient, private router: Router) {}
   signup(email: string, password: string) {
     this.http
@@ -35,6 +37,7 @@ export class AuthService {
   login(email: string, password: string) {
     this.http.post<any>(BACKEND_URL + "/login", { email, password }).subscribe(
       response => {
+        this.userEmail = email;
         this.token = response.token;
         if (this.token) {
           const expirationTime = response.expiresIn;
@@ -52,7 +55,8 @@ export class AuthService {
           this.saveAuthInfo(
             this.userId,
             absoluteExpirationDate.toISOString(),
-            this.token
+            this.token,
+            this.userEmail
           );
         }
         this.router.navigate(["/"]);
@@ -75,6 +79,7 @@ export class AuthService {
     if (expiresIn > 0) {
       this.token = authInfo.token;
       this.userId = authInfo.userId;
+      this.userEmail = authInfo.email;
       this.isAuthenticated = true;
       this.authEmitter.next(true);
       this.setAuthTimer(expiresIn / 1000);
@@ -111,25 +116,34 @@ export class AuthService {
     localStorage.removeItem("userId");
     localStorage.removeItem("expirationDate");
     localStorage.removeItem("token");
+    localStorage.removeItem("email");
   }
-  private saveAuthInfo(userId: string, expirationDate: string, token: string) {
+  private saveAuthInfo(
+    userId: string,
+    expirationDate: string,
+    token: string,
+    email: string
+  ) {
     //save authentication info to locl storage
     localStorage.setItem("userId", userId);
     localStorage.setItem("expirationDate", expirationDate);
     localStorage.setItem("token", token);
+    localStorage.setItem("email", email);
   }
   private getAuthInfo() {
     //get authentication info from local storage
     const userId = localStorage.getItem("userId");
     const expirationDate = localStorage.getItem("expirationDate");
     const token = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
     if (!token || !expirationDate) {
       return;
     }
     return {
       userId,
       expirationDate,
-      token
+      token,
+      email
     };
   }
   getToken() {
@@ -143,5 +157,8 @@ export class AuthService {
   }
   getAuthMessageEmitter() {
     return this.authMessageEmitter.asObservable();
+  }
+  getUserEmail() {
+    return this.userEmail;
   }
 }

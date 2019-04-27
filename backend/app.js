@@ -5,9 +5,9 @@ const UserRoutes = require("./routes/UserRoutes");
 const GameRoutes = require("./routes/GameRoutes");
 const path = require("path");
 const cors = require("cors");
+const app = express();
 
 require("dotenv").config();
-const app = express();
 
 Backendless.initApp(process.env.APP_ID, process.env.API_KEY);
 
