@@ -81,3 +81,41 @@ exports.getSummary = async (req, res) => {
     });
   }
 };
+
+exports.getTopPlayers = async (req, res) => {
+  try {
+    //get sorted rating arrays
+    let queryBuilder = Backendless.DataQueryBuilder.create();
+    queryBuilder.setSortBy(["score DESC"]);
+    const highscoreArray = await Backendless.Data.of(Highscore).find(
+      queryBuilder
+    );
+
+    let userIdArr = [];
+    let result = [];
+    let count = 3;
+    for (const highscore of highscoreArray) {
+      //if 3 top players are found then break
+      if (count == 0) {
+        break;
+      }
+      //check if userId is already in the array, if not then add to the array
+      if (!userIdArr.includes(highscore.ownerId)) {
+        count--;
+        userIdArr.push(highscore.ownerId);
+        result.push({
+          score: highscore.score,
+          player: highscore.ownerId
+        });
+      }
+    }
+    return res.status(200).json({
+      message: "Get 3 top players successfully",
+      topPlayers: result
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message
+    });
+  }
+};
