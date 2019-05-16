@@ -103,9 +103,12 @@ exports.getTopPlayers = async (req, res) => {
       if (!userIdArr.includes(highscore.ownerId)) {
         count--;
         userIdArr.push(highscore.ownerId);
+        const player = await Backendless.Data.of(Backendless.User).findById(
+          highscore.ownerId
+        );
         result.push({
           score: highscore.score,
-          player: highscore.ownerId
+          email: player.email
         });
       }
     }

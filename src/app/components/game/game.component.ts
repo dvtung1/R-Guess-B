@@ -13,7 +13,9 @@ import { Socket } from "ngx-socket-io";
 export class GameComponent implements OnInit, OnDestroy {
   response: any;
   isAuthenticated: boolean;
+  topPlayersList: any[];
   private authListener: Subscription;
+  private topPlayersListener: Subscription;
   constructor(
     private gameService: GameService,
     private authService: AuthService,
@@ -22,6 +24,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.authListener.unsubscribe();
+    this.topPlayersListener.unsubscribe();
   }
   ngOnInit() {
     executeGame();
@@ -31,16 +34,23 @@ export class GameComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.isAuthenticated = isAuthenticated;
       });
+    this.topPlayersListener = this.gameService
+      .getTopPlayersEmitter()
+      .subscribe(topPlayersList => {
+        this.topPlayersList = topPlayersList;
+      });
+    this.gameService.getTopPlayers();
   }
   onClick() {
     let highscore = getHighscore();
     this.gameService.saveHighscore(highscore).subscribe(
       response => {
+        //emit the current score of the current player
         this.socket.emit("score", {
           score: highscore,
-          user: this.authService.getUserEmail()
+          email: this.authService.getUserEmail()
         });
-        console.log(response.message);
+        console.log("Saved highscore");
       },
       err => {
         console.log(err.error.message);

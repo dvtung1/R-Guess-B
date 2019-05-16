@@ -24,7 +24,7 @@ exports.logIn = async (req, res) => {
     const currentUser = await Backendless.UserService.login(
       email,
       password,
-      false
+      true
     );
     const token = jwt.sign(
       { email, userId: currentUser.objectId },
